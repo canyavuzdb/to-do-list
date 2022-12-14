@@ -16,12 +16,28 @@ function eventListeners(){ // Tum element listenerlar
 function addTodo(e){
     const newtTodo = todoInput.value.trim();
 
-    addTodoToUI(newtTodo);
+    if(newtTodo === ""){
+
+        showAlert("danger","Lutfen bir todo girin...")
+    }
+    else {
+        addTodoToUI(newtTodo);
+    }
 
 
     e.preventDefault();
 }
-
+function showAlert(type,message){ // 
+    const alert = document.createElement("div");
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    firstCardBody.appendChild(alert);
+    // setTimeout
+    setTimeout(function(){
+        alert.remove();
+    },2000);
+    
+}
 function addTodoToUI(newtTodo){//string degerini list item olarak UI'ya ekleyecek.
 
     // List Item olusturma
