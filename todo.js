@@ -11,8 +11,27 @@ eventListeners();
 
 function eventListeners(){ // Tum element listenerlar
     form.addEventListener("submit",addTodo);
+    document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
+    secondCardBody.addEventListener("click",deleteTodo);
 }
+function deleteTodo(e){
+    
+    if(e.target.className === "fa fa-remove"){
+        e.target.parentElement.parentElement.remove();
+        showAlert("success","Todo basariyla silindi...")
 
+    }
+
+
+
+}
+function loadAllTodosToUI(){
+    let todos = getTodosFormStorage();
+
+    todos.forEach(function(todo){
+        addTodoToUI(todo);
+    })
+}
 function addTodo(e){
     const newtTodo = todoInput.value.trim();
 
