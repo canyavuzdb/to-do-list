@@ -14,17 +14,30 @@ function eventListeners(){ // Tum element listenerlar
     document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
     secondCardBody.addEventListener("click",deleteTodo);
 }
+
 function deleteTodo(e){
     
     if(e.target.className === "fa fa-remove"){
         e.target.parentElement.parentElement.remove();
+        deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
         showAlert("success","Todo basariyla silindi...")
 
     }
-
-
-
 }
+
+function deleteTodoFromStorage(removeTodo){
+    let todos = getTodosFormStorage();
+    todos.forEach(function(todo,index){
+        if(todo === removeTodo){
+            todos.splice(index,1);
+
+        }
+
+    })
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
+
+
 function loadAllTodosToUI(){
     let todos = getTodosFormStorage();
 
@@ -32,6 +45,7 @@ function loadAllTodosToUI(){
         addTodoToUI(todo);
     })
 }
+
 function addTodo(e){
     const newtTodo = todoInput.value.trim();
 
@@ -48,6 +62,7 @@ function addTodo(e){
 
     e.preventDefault();
 }
+
 function getTodosFormStorage(){
     let todos;
     
@@ -60,6 +75,7 @@ function getTodosFormStorage(){
     return todos;
     
 }
+
 function addTodoToStorage(newtTodo){
     let todos = getTodosFormStorage();
     todos.push(newtTodo);
