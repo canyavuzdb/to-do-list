@@ -22,11 +22,31 @@ function addTodo(e){
     }
     else {
         addTodoToUI(newtTodo);
+        addTodoToStorage(newtTodo);
+        showAlert("success","Todo basariyla eklendi...");
     }
 
 
     e.preventDefault();
 }
+function getTodosFormStorage(){
+    let todos;
+    
+    if (localStorage.getItem("todos") === null){
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem("todos"))
+    }
+    return todos;
+    
+}
+function addTodoToStorage(newtTodo){
+    let todos = getTodosFormStorage();
+    todos.push(newtTodo);
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
+
 function showAlert(type,message){ // 
     const alert = document.createElement("div");
     alert.className = `alert alert-${type}`;
@@ -35,9 +55,9 @@ function showAlert(type,message){ //
     // setTimeout
     setTimeout(function(){
         alert.remove();
-    },2000);
-    
+    },1000);
 }
+
 function addTodoToUI(newtTodo){//string degerini list item olarak UI'ya ekleyecek.
 
     // List Item olusturma
